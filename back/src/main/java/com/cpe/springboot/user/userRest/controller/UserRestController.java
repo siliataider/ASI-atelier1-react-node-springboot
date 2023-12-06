@@ -1,10 +1,11 @@
-package com.cpe.springboot.user.controller;
+package com.cpe.springboot.user.userRest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,6 @@ public class UserRestController {
 			uDTOList.add(DTOMapper.fromUserModelToUserDTO(uM));
 		}
 		return uDTOList;
-
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/user/{id}")
@@ -51,7 +51,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
-	public UserDTO addUser(@RequestBody UserDTO user) {
+	public ResponseEntity addUser(@RequestBody UserDTO user) {
 		return userService.addUser(user);
 	}
 	

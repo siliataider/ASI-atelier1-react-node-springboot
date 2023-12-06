@@ -1,4 +1,4 @@
-package com.cpe.springboot.user.controller;
+package com.cpe.springboot.user.repository;
 
 import java.util.List;
 
