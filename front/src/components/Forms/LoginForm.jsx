@@ -5,12 +5,17 @@ const LoginForm = () => {
   const [username_input, setUsername] = useState('');
   const [password_input, setPassword] = useState('');
 
-  const handleLogin = () => {
-    const data = {
-      username: username_input,
-      password: password_input
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (username_input && password_input) {
+      const data = {
+        username: username_input,
+        password: password_input
       };
-    console.log('Logging in with:', data);
+      console.log('Logging in with:', data);
+    } else {
+      alert('Dont be silly, fill in all the fields or I will delete your money!')
+    }
   };
 
   return (
@@ -23,6 +28,7 @@ const LoginForm = () => {
                   Username:
                 </label>
                 <input
+                  required
                   type="text"
                   className="form-control"
                   id="username"
@@ -35,6 +41,7 @@ const LoginForm = () => {
                   Password:
                 </label>
                 <input
+                  required
                   type="password"
                   className="form-control"
                   id="password"
@@ -43,8 +50,7 @@ const LoginForm = () => {
                 />
               </div>
               <button
-                type="button"
-                className="btn btn-primary"
+                type="submit"
                 onClick={handleLogin}
               >
                 Let's go!

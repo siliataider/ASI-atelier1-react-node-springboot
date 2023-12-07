@@ -8,15 +8,20 @@ const SignupForm = () => {
   const [surname, setSurName] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleSignup = () => {
-    const data = {
-      login: new_username,
-      pwd: new_password,
-      lastName: last_name,
-      surName: surname,
-      email: email,
-    };
-    console.log('Signing up with:', data);
+  const handleSignup = (e) => {
+    e.preventDefault();
+    if (new_username && new_password && last_name && surname && email) {
+      const data = {
+        login: new_username,
+        pwd: new_password,
+        lastName: last_name,
+        surName: surname,
+        email: email,
+      };
+      console.log('Signing up with:', data);    
+    } else {
+      alert('Fill all the fields or I will raise the cards price!')
+    }
   };
 
   return (
@@ -86,7 +91,7 @@ const SignupForm = () => {
         </div>
         <button
           type="button"
-          className="btn btn-primary"
+          
           onClick={handleSignup}
         >
           Let's go!
@@ -98,3 +103,7 @@ const SignupForm = () => {
 };
 
 export default SignupForm;
+
+/*
+className="btn btn-primary"
+*/

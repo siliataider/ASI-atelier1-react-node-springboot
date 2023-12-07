@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
+import LoginForm from './components/Forms/LoginForm'
+import SignupForm from './components/Forms/SignupForm'
+import Shop from './components/Shop/Shop'
+import Card from './components/Card/Card'
+import * as jsonSource from './sources/cards.json';
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cards, setCards] = useState(jsonSource.cards);
 
   const handleLoginClick = () => {
       setShowLogin(true);
@@ -26,14 +31,20 @@ function App() {
      setShowLogin(false);
      setShowSignup(false);
      setShowButtons(true);
+     setIsLoggedIn(false)
    };
 
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
-    <>
+    <>  
           <h1>Welcome to G5's Card Shop!</h1>
           <p className="read-the-docs">
             Create your account and discover our endless inventory!
           </p>
+          <div className="main">
            {showButtons && (
            <>
             <div>
@@ -61,31 +72,17 @@ function App() {
               <button onClick={handleGoBack}>Go Back</button>
             </div>
           )}
+
+          {isLoggedIn && (
+            <div>
+              <Shop />
+              <button onClick={handleGoBack}>Log out</button>
+            </div>
+          )}
+
+        </div>
         </>
   )
 }
 
 export default App
-
-/*
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
- */
