@@ -1,6 +1,18 @@
 import React from 'react';
 
-const Card = () => {
+const Card = ({ id, description }) => {
+  return (
+    <div>
+      <h3>ID: {id}</h3>
+      <p>Description: {description}</p>
+    </div>
+  );
+};
+
+export default Card;
+
+
+/*const Card = () => {
   return (
     <div className="ui segment">
       <div className="ui special cards">
@@ -83,3 +95,4 @@ const Card = () => {
 };
 
 export default Card;
+*/

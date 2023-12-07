@@ -1,19 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useState, useEffect  } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/Forms/LoginForm'
 import SignupForm from './components/Forms/SignupForm'
 import Shop from './components/Shop/Shop'
 import Card from './components/Card/Card'
 import * as jsonSource from './sources/cards.json';
+import { loadCards } from './slices/shopSlice';
+import { logout } from './slices/authSlice';
+
 
 import './App.css'
 
 function App() {
+  const dispatch = useDispatch();
+
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [cards, setCards] = useState(jsonSource.cards);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const cards = useSelector((state) => state.shop.cards);
 
   const handleLoginClick = () => {
       setShowLogin(true);
@@ -31,12 +36,22 @@ function App() {
      setShowLogin(false);
      setShowSignup(false);
      setShowButtons(true);
-     setIsLoggedIn(false)
+     dispatch(logout());
    };
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
+    setShowLogin(false);
+    setShowSignup(false);
+    setShowButtons(false);
+    dispatch(loadCards(jsonSource.default));
   };
+
+  useEffect(() => {
+    console.log('hello this is useEffect')
+    if (isLoggedIn) {
+      handleLoginSuccess();
+    }
+  }, [isLoggedIn]);
 
   return (
     <>  

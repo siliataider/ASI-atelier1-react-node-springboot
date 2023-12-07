@@ -1,21 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const shopSlice = createSlice({
-  name: 'Shop',
+  name: 'shop',
   initialState: {
-    current_card: {},
+    currentCard: {},
     cards: [],
   },
   reducers: {
-    set_current_card: (state, action) => {
-        state.current_card = action.payload
+    setCurrentCard: (state, action) => {
+      state.currentCard = action.payload;
+      console.log('setCurrentCard reducer')
     },
-    load_cards: (state, action) => {
-        state.cards = action.payload
+    loadCards: (state, action) => {
+      state.cards = action.payload;
+      console.log('loadCards reducer', state.cards)
     },
-}
-})
+  },
+});
 
-export const { load_cards, set_current_card } = shopSlice.actions
+export const { loadCards, setCurrentCard } = shopSlice.actions;
 
-export default shopSlice.reducer
+export default shopSlice.reducer;

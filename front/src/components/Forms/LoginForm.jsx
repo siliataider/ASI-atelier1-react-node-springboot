@@ -1,18 +1,33 @@
 // LoginForm.jsx
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../slices/authSlice';
 
 const LoginForm = () => {
   const [username_input, setUsername] = useState('');
   const [password_input, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (username_input && password_input) {
+
+      const isAuthenticated = true;
+
       const data = {
         username: username_input,
         password: password_input
       };
       console.log('Logging in with:', data);
+
+      if (isAuthenticated) {
+        dispatch(loginSuccess()); // Dispatch action indicating successful login
+      } else {
+        setError('Invalid credentials');
+      }
+
     } else {
       alert('Dont be silly, fill in all the fields or I will delete your money!')
     }
