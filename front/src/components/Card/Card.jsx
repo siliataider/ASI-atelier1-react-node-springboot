@@ -6,7 +6,7 @@ const Card = ({ card, showCardDetails }) => {
       {showCardDetails ? (
       <div className="card-detail-container">
         <div className="ui segment">
-          <div className="ui special cards">
+          <div className="ui special cards d-inline-flex">
             <div className="card">
               <div className="content">
                 <div className="ui grid">
