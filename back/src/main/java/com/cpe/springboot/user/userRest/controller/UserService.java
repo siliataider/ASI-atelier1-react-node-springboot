@@ -73,10 +73,8 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-	public UserDTO updateUser(UserDTO user) {
-		UserModel u = fromUDtoToUModel(user);
-		UserModel uBd =userRepository.save(u);
-		return DTOMapper.fromUserModelToUserDTO(uBd);
+	public ResponseEntity updateUser(UserDTO user) {
+		return(this.userRestBus.updateUser(user));
 	}
 
 	/**
@@ -84,9 +82,8 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-	public UserDTO updateUser(UserModel user) {
-		UserModel uBd = userRepository.save(user);
-		return DTOMapper.fromUserModelToUserDTO(uBd);
+	public ResponseEntity updateUser(UserModel user) {
+		return (this.userRestBus.updateUser(user));
 	}
 
 	/**
@@ -94,8 +91,8 @@ public class UserService {
 	 * @param id
 	 * @return
 	 */
-	public void deleteUser(String id) {
-		userRepository.deleteById(Integer.valueOf(id));
+	public ResponseEntity deleteUser(String id) {
+		return(this.userRestBus.deleteUser(id));
 	}
 
 	/**

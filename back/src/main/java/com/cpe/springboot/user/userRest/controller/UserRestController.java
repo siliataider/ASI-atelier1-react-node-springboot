@@ -56,14 +56,14 @@ public class UserRestController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
-	public UserDTO updateUser(@RequestBody UserDTO user,@PathVariable String id) {
+	public ResponseEntity updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
 		return userService.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
-	public void deleteUser(@PathVariable String id) {
-		userService.deleteUser(id);
+	public ResponseEntity deleteUser(@PathVariable String id) {
+		return userService.deleteUser(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")

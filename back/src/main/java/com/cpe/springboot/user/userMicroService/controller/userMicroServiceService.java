@@ -33,6 +33,7 @@ public class userMicroServiceService {
         }
         UserModel uBd = userRepository.save(u);
         // TODO what to do with the result ?
+        System.out.println("User added !");
         //return DTOMapper.fromUserModelToUserDTO(uBd);
     }
 
@@ -43,8 +44,11 @@ public class userMicroServiceService {
      * @param user
      * @return
      */
-    public UserDTO updateUser(UserDTO user) {
-        return null;
+    public void updateUser(UserDTO user) {
+        UserModel u = fromUDtoToUModel(user);
+        UserModel uBd =userRepository.save(u);
+        System.out.println("User DTO updated");
+        //return DTOMapper.fromUserModelToUserDTO(uBd);
     }
 
     /**
@@ -52,8 +56,10 @@ public class userMicroServiceService {
      * @param user
      * @return
      */
-    public UserDTO updateUser(UserModel user) {
-        return null;
+    public void updateUser(UserModel user) {
+        UserModel uBd = userRepository.save(user);
+        System.out.println("User model updated !");
+//        return DTOMapper.fromUserModelToUserDTO(uBd);
     }
 
     /**
@@ -62,6 +68,8 @@ public class userMicroServiceService {
      * @return
      */
     public void deleteUser(String id) {
+        userRepository.deleteById(Integer.valueOf(id));
+        System.out.println("User deleted !");
     }
 
     private UserModel fromUDtoToUModel(UserDTO user) {
