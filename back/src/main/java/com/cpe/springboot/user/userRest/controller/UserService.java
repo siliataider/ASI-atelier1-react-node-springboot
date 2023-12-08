@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.cpe.springboot.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,6 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final CardModelService cardModelService;
-
 	private final UserRestBus userRestBus;
 
 	public UserService(UserRepository userRepository, CardModelService cardModelService) {

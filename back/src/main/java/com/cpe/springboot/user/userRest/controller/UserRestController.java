@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +27,10 @@ import com.cpe.springboot.user.model.UserModel;
 public class UserRestController {
 
 	private final UserService userService;
+	private final UserRestBus userRestBus;
 	
-	public UserRestController(UserService userService) {
+	public UserRestController(UserService userService, UserRestBus userRestBus) {
+		this.userRestBus = userRestBus;
 		this.userService=userService;
 	}
 	
@@ -52,18 +56,18 @@ public class UserRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
 	public ResponseEntity addUser(@RequestBody UserDTO user) {
-		return userService.addUser(user);
+		return userRestBus.addUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
 	public ResponseEntity updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
-		return userService.updateUser(user);
+		return userRestBus.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
 	public ResponseEntity deleteUser(@PathVariable String id) {
-		return userService.deleteUser(id);
+		return userRestBus.deleteUser(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")

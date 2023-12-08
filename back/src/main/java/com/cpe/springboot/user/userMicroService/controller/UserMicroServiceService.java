@@ -2,23 +2,23 @@ package com.cpe.springboot.user.userMicroService.controller;
 
 import com.cpe.springboot.card.Controller.CardModelService;
 import com.cpe.springboot.card.model.CardModel;
-import com.cpe.springboot.common.tools.DTOMapper;
 import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 import com.cpe.springboot.user.repository.UserRepository;
+import org.springframework.jms.annotation.EnableJms;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class userMicroServiceService {
+public class UserMicroServiceService {
     // TODO anotation
 
     private final UserRepository userRepository;
 
     private final CardModelService cardModelService;
 
-    public userMicroServiceService(UserRepository userRepository, CardModelService cardModelService) {
+    public UserMicroServiceService(UserRepository userRepository, CardModelService cardModelService) {
         this.userRepository = userRepository;
         this.cardModelService = cardModelService;
     }
@@ -67,8 +67,8 @@ public class userMicroServiceService {
      * @param id
      * @return
      */
-    public void deleteUser(String id) {
-        userRepository.deleteById(Integer.valueOf(id));
+    public void deleteUser(Integer id) {
+        userRepository.deleteById(id);
         System.out.println("User deleted !");
     }
 
