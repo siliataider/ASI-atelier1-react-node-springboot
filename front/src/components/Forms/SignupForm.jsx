@@ -1,5 +1,5 @@
 // SignupForm.jsx
-import React, { useState } from 'react';
+import { useState, useEffect  } from 'react';
 
 const SignupForm = () => {
   const [new_username, setNewUsername] = useState('');
@@ -8,6 +8,36 @@ const SignupForm = () => {
   const [surname, setSurName] = useState('');
   const [email, setEmail] = useState('');
 
+  const createUser = async () => {
+    try {
+      const data = {
+        login: new_username,
+        pwd: new_password,
+        lastName: last_name,
+        surName: surname,
+        email: email,
+        account: 100.0,
+        cardList: []
+      };
+
+      const response = await fetch('http://localhost:80/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'envoi des données POST');
+      }
+
+      const jsonData = await response.json();
+      console.log(jsonData)
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi des données POST:', error);
+    }
+  };
   const handleSignup = (e) => {
     e.preventDefault();
     if (new_username && new_password && last_name && surname && email) {
@@ -18,11 +48,13 @@ const SignupForm = () => {
         surName: surname,
         email: email,
       };
-      console.log('Signing up with:', data);    
+      console.log('Signing up with:', data);   
+      createUser();
     } else {
       alert('Fill all the fields or I will raise the cards price!')
     }
   };
+  
 
   return (
     <div>
