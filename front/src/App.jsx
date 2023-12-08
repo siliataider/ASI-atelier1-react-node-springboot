@@ -91,6 +91,7 @@ function App() {
           {isLoggedIn && (
             <div>
               <Shop />
+              <br></br>
               <button onClick={handleGoBack}>Log out</button>
             </div>
           )}
