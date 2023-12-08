@@ -1,0 +1,36 @@
+[
+    {
+      "id": 1,
+      "name": "Happy Tree Family 1",
+      "image": "https://static.hitek.fr/img/actualite/2017/06/27/i_deadpool-2.jpg",
+      "description": "test 1Le convoi d'Ajax est attaqué par Deadpool...",
+      "hp": 10,
+      "energy": 10,
+      "attack": 20,
+      "defense": 500,
+      "price": 100
+    },
+    {
+        "id": 2,
+        "name": "Happy Tree Family 2",
+        "image": "https://static.hitek.fr/img/actualite/2017/06/27/i_deadpool-2.jpg",
+        "description": "test 2 Le convoi d'Ajax est attaqué par Deadpool...",
+        "hp": 20,
+        "energy": 10,
+        "attack": 20,
+        "defense": 500,
+        "price": 100
+    },
+    {
+        "id": 3,
+        "name": "Happy Tree Family 3",
+        "image": "https://static.hitek.fr/img/actualite/2017/06/27/i_deadpool-2.jpg",
+        "description": "test 3 Le convoi d'Ajax est attaqué par Deadpool...",
+        "hp": 30,
+        "energy": 10,
+        "attack": 20,
+        "defense": 500,
+        "price": 100
+    }
+  ]
+  

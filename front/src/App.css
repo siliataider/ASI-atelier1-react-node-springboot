@@ -40,3 +40,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.main{
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: gainsboro;
+    padding: 25px;
+    margin: 100px 0px 0px 0px;
+}
