@@ -11,13 +11,13 @@ const Inventory = () => {
   useEffect(() => {
     const getUserCards = async () => {
       try {
-        // TODO remove comment when api
-        //const response = await fetch('http://localhost:8082/getUserCards');
-        //if (!response.ok) {
-        //  throw new Error('Failed to fetch user cards');
-        //}
-        //const jsonUserCards = await response.json();
-        setUserCards(cards);
+        const response = await fetch('http://localhost:80/cards');
+        if (!response.ok) {
+          throw new Error('Failed to fetch user cards');
+        }
+        const jsonUserCards = await response.json();
+        console.log(jsonUserCards)
+        setUserCards(jsonUserCards);
       } catch (error) {
         console.error('Erreur lors de la récupération des données GET:', error);
       }
