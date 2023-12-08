@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoginForm from './components/Forms/LoginForm'
 import SignupForm from './components/Forms/SignupForm'
 import Shop from './components/Shop/Shop'
+import Inventory from './components/Inventory/Inventory'
 import Card from './components/Card/Card'
 import * as jsonSource from './sources/cards.json';
 import { loadCards } from './slices/shopSlice';
@@ -19,6 +20,7 @@ function App() {
   const [showButtons, setShowButtons] = useState(true);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const cards = useSelector((state) => state.shop.cards);
+  const [loadShopOrInv, setShopOrInv] = useState(false);
 
   const handleLoginClick = () => {
       setShowLogin(true);
@@ -46,6 +48,10 @@ function App() {
     dispatch(loadCards(jsonSource.default));
   };
 
+  const handleLoadInventory = () => {
+    setShopOrInv(!loadShopOrInv);
+  };
+
   useEffect(() => {
     console.log('hello this is useEffect')
     if (isLoggedIn) {
@@ -54,7 +60,7 @@ function App() {
   }, [isLoggedIn]);
 
   return (
-    <>  
+    <>   
           <h1>Welcome to G5's Card Shop!</h1>
           <p className="read-the-docs">
             Create your account and discover our endless inventory!
@@ -90,13 +96,24 @@ function App() {
 
           {isLoggedIn && (
             <div>
-              <Shop />
+              { loadShopOrInv
+                ? <Inventory />
+                : <Shop />
+              }
               <br></br>
               <button onClick={handleGoBack}>Log out</button>
             </div>
           )}
-
         </div>
+        {isLoggedIn && (
+            <div>
+              { loadShopOrInv
+                ? <button onClick={handleLoadInventory}>Shop</button>
+                : <button onClick={handleLoadInventory}>Inventory</button>
+              }
+            
+            </div>
+          )}
         </>
   )
 }
