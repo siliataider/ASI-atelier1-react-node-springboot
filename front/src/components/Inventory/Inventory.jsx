@@ -8,7 +8,6 @@ const Inventory = () => {
   const [userCards, setUserCards] = useState([]);
   const cards = useSelector((state) => state.shop.cards);//TODO: remove when backend connexion
 
-
   useEffect(() => {
     const getUserCards = async () => {
       try {
@@ -33,10 +32,10 @@ const Inventory = () => {
       <h2>Inventory</h2>
       {userCards.map((card) => (
         <div key={card.id}>
-          <Card id={card.id} description={card.description} />
+          <Card card = {card} showCardDetails = {true} />
+          <button className='btn btn-info pb-1'>Sell</button>
         </div>
       ))}
-      <button className='btn btn-info pb-1'>Sell</button>
     </div>
   );
 };
