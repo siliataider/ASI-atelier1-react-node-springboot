@@ -3,7 +3,10 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: large;
 }
+
 
 .logo {
   height: 6em;
@@ -48,3 +51,25 @@
     padding: 25px;
     margin: 100px 0px 0px 0px;
 }
+
+.card-container {
+  display: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: #f0f0f0;
+}
+
+card-detail-container {
+   color: red;
+   display: center;
+   flex-wrap: wrap;
+ }
