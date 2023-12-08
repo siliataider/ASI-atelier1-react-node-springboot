@@ -83,7 +83,8 @@ const Card = ({ card, showCardDetails }) => {
       </div>
       ) : (
         <div>
-          <h3>ID: {card.id}</h3>
+          <h3>{card.name}</h3>
+          <h4>ID: {card.id}</h4>
           <p>Description: {card.description}</p>
         </div>
       )}
