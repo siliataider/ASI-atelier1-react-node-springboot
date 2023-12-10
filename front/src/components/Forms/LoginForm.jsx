@@ -1,7 +1,7 @@
-// LoginForm.jsx
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../slices/authSlice';
+import config from '../../../config';
 
 const LoginForm = () => {
   const [username_input, setUsername] = useState('');
@@ -10,23 +10,40 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
+  const logUser = async (data) => {
+    try {
+      const response = await fetch(`${config.BASE_URL}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        setError('Invalid credentials');
+        return;
+      }
+
+      const userId = await response.json();
+      console.log("User ID: ", userId);
+      dispatch(loginSuccess(userId));
+
+    } catch (error) {
+      console.error('Error during POST request:', error);
+      setError('Network or server error');
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
+    setError('');
     if (username_input && password_input) {
-
-      const isAuthenticated = true;
-
       const data = {
         username: username_input,
         password: password_input
       };
       console.log('Logging in with:', data);
-
-      if (isAuthenticated) {
-        dispatch(loginSuccess()); // Dispatch action indicating successful login
-      } else {
-        setError('Invalid credentials');
-      }
+      logUser(data);
 
     } else {
       alert('Dont be silly, fill in all the fields or I will delete your money!')
@@ -36,6 +53,7 @@ const LoginForm = () => {
   return (
     <div>
       <h2>Login Form</h2>
+          {error && <div className="error-message">{error}</div>}
            <form>
            <div className="main" >
               <div className="mb-3">

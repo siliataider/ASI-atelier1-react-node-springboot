@@ -8,9 +8,8 @@ import Card from './components/Card/Card'
 import * as jsonSource from './sources/cards.json';
 import { loadCards } from './slices/shopSlice';
 import { logout } from './slices/authSlice';
-
-
 import './App.css'
+import config from '../config';
 
 function App() {
   const dispatch = useDispatch();
@@ -45,7 +44,8 @@ function App() {
     setShowLogin(false);
     setShowSignup(false);
     setShowButtons(false);
-    dispatch(loadCards(jsonSource.default));
+    // dispatch(loadCards(jsonSource.default));
+    fetchCards();
   };
 
   const handleLoadInventory = () => {
@@ -53,12 +53,25 @@ function App() {
   };
 
   useEffect(() => {
-    console.log('hello this is useEffect')
     if (isLoggedIn) {
       handleLoginSuccess();
     }
   }, [isLoggedIn]);
 
+  const fetchCards = async () => {
+    try {
+      const response = await fetch(`${config.BASE_URL}/cards`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch cards');
+      }
+      const cardsData = await response.json();
+      dispatch(loadCards(cardsData));
+    } catch (error) {
+      console.error('Error fetching cards:', error);
+    }
+  };
+
+  
   return (
     <>   
           <h1>Welcome to G5's Card Shop!</h1>
