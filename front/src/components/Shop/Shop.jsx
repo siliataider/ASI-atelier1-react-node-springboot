@@ -8,15 +8,50 @@ const Shop = () => {
   const cards = useSelector((state) => state.shop.cards);
   const currentCard = useSelector((state) => state.shop.currentCard);
   const [showCardDetails, setShowCardDetails] = useState(false);
+  const currentUserId = useSelector((state) => state.auth.currentUserId);
 
   const handleCardClick = (card) => {
     dispatch(setCurrentCard(card));
     setShowCardDetails(true);
   };
 
-  const handleBuyClick = () => {
-    alert(`Buy card with ID: ${currentCard.id}`);
-  };
+  const handleBuyClick = async () => {
+  
+    if (!currentCard.id || !userId) {
+      alert('No card selected or user ID not found!');
+      return;
+    }
+  
+    const order = {
+      user_id: parseInt(currentUserId),
+      card_id: parseInt(currentCard.id)
+    };
+  
+    try {
+      const response = await fetch(`${config.BASE_URL}/buy`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to buy card');
+      }
+  
+      const purchaseSuccess = await response.json();
+      if (purchaseSuccess) {
+        alert(`Successfully bought card with ID: ${currentCard.id}`);
+      } else {
+        alert('Failed to buy card. Please try again.');
+      }
+  
+    } catch (error) {
+      console.error('Error during buy card request:', error);
+      alert('Failed to buy card');
+    }
+  };  
 
   return (
     <div>

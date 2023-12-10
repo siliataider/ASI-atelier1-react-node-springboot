@@ -1,5 +1,7 @@
-// SignupForm.jsx
 import { useState, useEffect  } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../slices/authSlice';
+import config from '../../../config';
 
 const SignupForm = () => {
   const [new_username, setNewUsername] = useState('');
@@ -8,19 +10,11 @@ const SignupForm = () => {
   const [surname, setSurName] = useState('');
   const [email, setEmail] = useState('');
 
-  const createUser = async () => {
-    try {
-      const data = {
-        login: new_username,
-        pwd: new_password,
-        lastName: last_name,
-        surName: surname,
-        email: email,
-        account: 100.0,
-        cardList: []
-      };
+  const dispatch = useDispatch();
 
-      const response = await fetch('http://localhost:80/user', {
+  const createUser = async (data) => {
+    try {
+      const response = await fetch(`${config.BASE_URL}/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,15 +23,32 @@ const SignupForm = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi des données POST');
+        throw new Error('Signup failed');
       }
 
-      const jsonData = await response.json();
-      console.log(jsonData)
+      // Send a request to connect the user directly after signup (pas ouf)
+      // TODO modifier le backend pour retourner le userID et éviter ça
+      const loginData = { username: data.login, password: data.pwd };
+      const loginResponse = await fetch(`${config.BASE_URL}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+
+      if (!loginResponse.ok) {
+        throw new Error('Login after signup failed');
+      }
+
+      const userId = await loginResponse.json();
+      dispatch(loginSuccess(userId));
+
     } catch (error) {
-      console.error('Erreur lors de l\'envoi des données POST:', error);
+      console.error('Error during POST request:', error);
     }
   };
+
   const handleSignup = (e) => {
     e.preventDefault();
     if (new_username && new_password && last_name && surname && email) {
@@ -47,9 +58,11 @@ const SignupForm = () => {
         lastName: last_name,
         surName: surname,
         email: email,
+        account: 100.0,
+        cardList: []
       };
       console.log('Signing up with:', data);   
-      createUser();
+      createUser(data);
     } else {
       alert('Fill all the fields or I will raise the cards price!')
     }
