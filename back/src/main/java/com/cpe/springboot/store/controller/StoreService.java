@@ -10,7 +10,7 @@ import com.cpe.springboot.card.Controller.CardModelService;
 import com.cpe.springboot.card.model.CardModel;
 import com.cpe.springboot.store.model.StoreAction;
 import com.cpe.springboot.store.model.StoreTransaction;
-import com.cpe.springboot.user.controller.UserService;
+import com.cpe.springboot.user.userRest.controller.UserService;
 import com.cpe.springboot.user.model.UserModel;
 
 @Service

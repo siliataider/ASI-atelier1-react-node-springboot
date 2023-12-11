@@ -1,11 +1,13 @@
 package com.cpe.springboot.user.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import com.cpe.springboot.card.model.CardModel;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
+	private static final long serialVersionUID = 1069270118228032170L;
 	private Integer id;
 	private String login;
 	private String pwd;
@@ -16,6 +18,10 @@ public class UserDTO {
 	private Set<Integer> cardList = new HashSet<>();
 	
 	public UserDTO() {
+	}
+
+	public UserDTO(int id){
+		this.id=id;
 	}
 
 	public UserDTO(UserModel user) {
@@ -94,5 +100,16 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return display();
+	}
+
+	public String display(){
+		String result;
+		result="User "+ getSurName() +" " + getLastName();
+		return result;
+	}
+
 
 }

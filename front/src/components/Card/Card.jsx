@@ -1,5 +1,18 @@
 import React from 'react';
 
+// TODO il y q des ele;ents pqs presents dqns le cqrd DTO
+// mais plutot dans cardBasix, bizarre mais y aura probablement
+// des erreurs quand j essaie dafficher le nom ou la description
+// le DTO ressemble a ça:
+/*
+private Integer id;
+	private float energy;
+	private float hp;
+	private float defence;
+	private float attack;
+	private float price;
+	private Integer userId;
+*/
 const Card = ({ card, showCardDetails }) => {
   return (
     <div>
@@ -83,7 +96,8 @@ const Card = ({ card, showCardDetails }) => {
       </div>
       ) : (
         <div>
-          <h3>ID: {card.id}</h3>
+          <h3>{card.name}</h3>
+          <h4>ID: {card.id}</h4>
           <p>Description: {card.description}</p>
         </div>
       )}
