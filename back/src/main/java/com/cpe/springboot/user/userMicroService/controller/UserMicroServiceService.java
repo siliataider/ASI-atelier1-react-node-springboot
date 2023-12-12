@@ -6,13 +6,14 @@ import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 import com.cpe.springboot.user.repository.UserRepository;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserMicroServiceService {
-    // TODO anotation
 
     private final UserRepository userRepository;
 

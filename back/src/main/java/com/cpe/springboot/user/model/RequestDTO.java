@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class RequestDTO implements Serializable {
     private static final long serialVersionUID = 1069270118228032171L;
-    private com.cpe.springboot.user.model.UserDTO userDTO;
-    private String action;
+    private UserDTO userDTO;
+    private messageType action;
 
     public UserDTO getUserDTO() {
         return userDTO;
     }
 
-    public String getAction() {
+    public messageType getAction() {
         return action;
     }
 
-    public RequestDTO(com.cpe.springboot.user.model.UserDTO userDTO, String action) {
+    public RequestDTO(UserDTO userDTO, messageType action) {
         this.userDTO = userDTO;
         this.action = action;
     }
