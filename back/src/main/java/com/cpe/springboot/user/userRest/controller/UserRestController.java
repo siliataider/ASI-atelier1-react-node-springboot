@@ -27,10 +27,8 @@ import com.cpe.springboot.user.model.UserModel;
 public class UserRestController {
 
 	private final UserService userService;
-	private final UserRestBus userRestBus;
 	
-	public UserRestController(UserService userService, UserRestBus userRestBus) {
-		this.userRestBus = userRestBus;
+	public UserRestController(UserService userService) {
 		this.userService=userService;
 	}
 	
@@ -56,18 +54,18 @@ public class UserRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/user")
 	public ResponseEntity addUser(@RequestBody UserDTO user) {
-		return userRestBus.addUser(user);
+		return userService.addUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/user/{id}")
 	public ResponseEntity updateUser(@RequestBody UserDTO user,@PathVariable String id) {
 		user.setId(Integer.valueOf(id));
-		return userRestBus.updateUser(user);
+		return userService.updateUser(user);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/user/{id}")
 	public ResponseEntity deleteUser(@PathVariable String id) {
-		return userRestBus.deleteUser(id);
+		return userService.deleteUser(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")
