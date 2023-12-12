@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentCard } from '../../slices/shopSlice';
+import { loadCards } from '../../slices/shopSlice';
 import Card from '../Card/Card';
+import config from '../../../config';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Shop = () => {
 
   const handleBuyClick = async () => {
   
-    if (!currentCard.id || !userId) {
+    if (!currentCard.id || !currentUserId) {
       alert('No card selected or user ID not found!');
       return;
     }
@@ -46,13 +48,25 @@ const Shop = () => {
       } else {
         alert('Failed to buy card. Please try again.');
       }
-  
+      setShowCardDetails(false);
+      fetchCards();
     } catch (error) {
       console.error('Error during buy card request:', error);
       alert('Failed to buy card');
     }
   };  
-
+  const fetchCards = async () => {
+    try {
+      const response = await fetch(`${config.BASE_URL}/cards_to_sell`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch cards to sell');
+      }
+      const cardsData = await response.json();
+      dispatch(loadCards(cardsData));
+    } catch (error) {
+      console.error('Error fetching cards:', error);
+    }
+  };
   return (
     <div>
       <h2>Card Shop</h2>

@@ -50,6 +50,7 @@ function App() {
 
   const handleLoadInventory = () => {
     setShopOrInv(!loadShopOrInv);
+    fetchCards();
   };
 
   useEffect(() => {
