@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '../Card/Card';
+import config from '../../../config';
 
 const Inventory = () => {
 
@@ -10,13 +11,22 @@ const Inventory = () => {
 
   const getUserCards = async () => {
     try {
-      const response = await fetch(`${config.BASE_URL}/cards_to_sell`);
+      const response = await fetch(`${config.BASE_URL}/user/${currentUserId}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch user cards');
+        throw new Error('Failed to fetch user infos');
       }
-      const jsonUserCards = await response.json();
-      console.log(jsonUserCards)
-      setUserCards(jsonUserCards);
+      const userInfo = await response.json();
+      
+      let listUserCards = []
+      for (let cardId of userInfo.cardList) {
+        let cardInfo = await getCards(cardId)
+        if (cardInfo) {
+          listUserCards.push(cardInfo);
+        }
+      }
+     
+      setUserCards(listUserCards);
+      
     } catch (error) {
       console.error('Erreur lors de la récupération des données GET:', error);
     }
@@ -25,9 +35,23 @@ const Inventory = () => {
   useEffect(() => {
     getUserCards()
   }, []); // Le tableau vide signifie que useEffect ne s'exécutera qu'une fois, équivalent à componentDidMount
-  
+
+  const getCards = async (cardId) => {
+    try {
+      const response = await fetch(`${config.BASE_URL}/card/${cardId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch card info');
+      }
+      const cardInfo = await response.json();
+      return cardInfo;
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données GET:', error);
+    }
+  };
+
+
   const handleSellClick = async (currentCard) => {
-  
     if (!currentCard.id || !currentUserId) {
       alert('No card selected or user ID not found!');
       return;
@@ -46,14 +70,13 @@ const Inventory = () => {
         },
         body: JSON.stringify(order),
       });
-  
       if (!response.ok) {
         throw new Error('Failed to sell card');
       }
   
       const purchaseSuccess = await response.json();
       if (purchaseSuccess) {
-        await getUserCards();
+        await getUserCards()
         alert(`Successfully sell with ID: ${currentCard.id}`);
       } else {
         alert('Failed to sell card. Please try again.');
