@@ -24,14 +24,6 @@ Using technologies like ActiveMQ, SpringBoot, Maven, React and JavaScript, this 
 - **⚙️ SOA Transition:** Showcases the transformation from a monolithic architecture to SOA.
 - **📡 Communication Bus:** Utilizes ActiveMQ for efficient message handling.
 
-## 📸 Screenshots
-
-- **Home Page:** ![First Page](path/to/home-page-screenshot.png)
-- **Login Form:** ![Login Form](path/to/login-form-screenshot.png)
-- **Shop Page:** ![Shop Page](path/to/shop-page-screenshot.png)
-- **Card Detail Page:** ![Card Detail Page](path/to/card-detail-page-screenshot.png)
-- **Inventory Page:** ![Inventory Page](path/to/inventory-page-screenshot.png)
-
 ## 💻 Front-End Development
 
 - **👥 Collaborators:** [@siliataider](https://github.com/siliataider), [@Eliott-rjd](https://github.com/Eliott-rjd)
