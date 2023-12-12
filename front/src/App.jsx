@@ -60,9 +60,9 @@ function App() {
 
   const fetchCards = async () => {
     try {
-      const response = await fetch(`${config.BASE_URL}/cards`);
+      const response = await fetch(`${config.BASE_URL}/cards_to_sell`);
       if (!response.ok) {
-        throw new Error('Failed to fetch cards');
+        throw new Error('Failed to fetch cards to sell');
       }
       const cardsData = await response.json();
       dispatch(loadCards(cardsData));
