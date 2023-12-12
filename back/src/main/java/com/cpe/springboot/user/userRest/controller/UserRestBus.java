@@ -3,6 +3,8 @@ package com.cpe.springboot.user.userRest.controller;
 import com.cpe.springboot.user.model.RequestDTO;
 import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
+import com.cpe.springboot.user.model.messageType;
+import com.cpe.springboot.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -17,54 +19,43 @@ public class UserRestBus {
 
     final private String okSatusMessage = "Requête prise en compte";
 
+    private final UserRepository userRepository;
+
+    public UserRestBus(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
     @Autowired
     JmsTemplate jmsTemplate;
 
-    public void sendMsg(RequestDTO msg, String busName) {
-        System.out.println("[BUSSERVICE] SEND String Request=["+msg+"] to Bus=["+busName+"]");
-        System.out.println(jmsTemplate);
+    private void sendMsg(RequestDTO msg, String busName) {
         jmsTemplate.convertAndSend(busName,msg);
     }
 
     public ResponseEntity addUser(UserDTO user) {
-        // SEND MESSAGE TO BUS
-        sendMsg(new RequestDTO(user,"add"), "userBus");
+        sendMsg(  new RequestDTO(user, messageType.ADD) , "userBus");
         return( new ResponseEntity( this.okSatusMessage ,HttpStatus.OK) );
     }
 
-    /**
-     * Write DB, redirected to bus
-     * @param user
-     * @return
-     */
     public ResponseEntity updateUser(UserDTO user) {
-        // send to bus
-        sendMsg(new RequestDTO(user,"update"), "userBus");
+        // TODO test if the user exists
+        sendMsg(new RequestDTO(user, messageType.UPDATE), "userBus");
         return( new ResponseEntity( this.okSatusMessage ,HttpStatus.OK) );
     }
 
-    /**
-     * Write DB, redirected to bus
-     * @param user
-     * @return
-     */
+
     public ResponseEntity updateUser(UserModel user) {
         return( new ResponseEntity( this.okSatusMessage ,HttpStatus.OK) );
     }
 
-    /**
-     * Write DB, redirected to bus
-     * @param id
-     * @return
-     */
     public ResponseEntity deleteUser(String id) {
-        sendMsg(new RequestDTO(new UserDTO(Integer.parseInt(id)),"delete"),
-                "userBus");
+        sendMsg(new RequestDTO(new UserDTO(Integer.parseInt(id)),messageType.DELETE),"userBus");
         return( new ResponseEntity( this.okSatusMessage ,HttpStatus.OK) );
     }
 
     public ResponseEntity deleteUser(UserDTO user) {
-        sendMsg(new RequestDTO(user,"delete"), "userBus");
+        // TODO this metode is never used
+        sendMsg(new RequestDTO(user,messageType.DELETE), "userBus");
         return( new ResponseEntity( this.okSatusMessage ,HttpStatus.OK) );
     }
 
