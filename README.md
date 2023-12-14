@@ -64,7 +64,7 @@ Before you begin, ensure you have the following installed:
 2. **🔄 Start the Reverse Proxy:**
   Navigate to the directory containing the `reverse-proxy.sh` script and run it to set up NGINX as a reverse proxy:
   ```bash
-  ./reverse-proxy.sh
+  bash ./reverse-proxy.sh
   ```
 3. **🌱 Launch the SpringBoot Application:**
   Open the backend project in your IDE and start the SpringBoot application. 
